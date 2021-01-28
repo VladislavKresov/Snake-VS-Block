@@ -45,7 +45,6 @@ public class Snake : MonoBehaviour
         if (_head.transform.position.x >= _snakeBorders.y && delta > 0)
             delta = 0;
 
-        Debug.Log("delta is:" + delta);
         _head.transform.up = Vector3.up + Vector3.right * delta / 10 / _dragSpeed;
         
         Vector3 nextPosition = Vector3.zero;
