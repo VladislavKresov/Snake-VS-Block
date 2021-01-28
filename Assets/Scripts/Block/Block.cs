@@ -1,0 +1,34 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Events;
+
+public class Block : MonoBehaviour
+{
+    [SerializeField] private Vector2Int _destroyPriceRange;
+    [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private Color[] _colors;
+
+    private int _destroyPrice;
+    private int _filling;
+    public int LeftToFill => _destroyPrice - _filling;
+
+    public event UnityAction<int> FillingUpdated;
+
+    private void Start()
+    {        
+        _spriteRenderer.color = _colors[Random.Range(0, _colors.Length)];
+        _destroyPrice = Random.Range(_destroyPriceRange.x, _destroyPriceRange.y);
+    }
+
+    public void Fill()
+    {
+        _filling++;
+        FillingUpdated?.Invoke(LeftToFill);
+
+        if(_filling == _destroyPrice)
+        {
+            Destroy(gameObject);
+        }
+    }
+}
